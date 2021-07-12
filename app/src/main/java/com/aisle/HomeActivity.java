@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.renderscript.RenderScript;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,9 +43,24 @@ public class HomeActivity extends Activity {
         matchesBadge.setVerticalOffset(22);
         matchesBadge.setNumber(102);
 
-        ConstraintLayout imageViewPhoto1 = findViewById(R.id.home_photo);
+        ConstraintLayout photo1 = findViewById(R.id.home_photo);
         Bitmap bitmapPhoto1 = ((BitmapDrawable) getResources().getDrawable(R.drawable.photo_1)).getBitmap();
-        imageViewPhoto1.setBackground(new BitmapDrawable(ImageHelper.getRoundedCornerBitmap(bitmapPhoto1, 20)));
+        photo1.setBackground(ImageHelper.getRoundedCornerBitmap(bitmapPhoto1, 20, true));
 
+        ConstraintLayout blurPhoto1 = findViewById(R.id.blur_photo_1);
+        Bitmap bitmapBlurPhoto1 = ((BitmapDrawable) getResources().getDrawable(R.drawable.photo_2)).getBitmap();
+        ImageHelper.blurBitmapWithRenderscript(RenderScript.create(this), bitmapBlurPhoto1);
+        blurPhoto1.setBackground(ImageHelper.getRoundedCornerBitmap(bitmapBlurPhoto1, 20, false));
+
+        ConstraintLayout blurPhoto2 = findViewById(R.id.blur_photo_2);
+        Bitmap bitmapBlurPhoto2 = ((BitmapDrawable) getResources().getDrawable(R.drawable.photo_3)).getBitmap();
+        ImageHelper.blurBitmapWithRenderscript(RenderScript.create(this), bitmapBlurPhoto2);
+        blurPhoto2.setBackground(ImageHelper.getRoundedCornerBitmap(bitmapBlurPhoto2, 20, false));
+
+
+        /*val bitmap = Blurry.with(this)
+                .radius(10)
+                .sampling(8)
+                .capture(findViewById(R.id.right_bottom)).get()*/
     }
 }
